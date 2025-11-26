@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ratha Resto - Fine Dining Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #000000;
+            color: #f5f5f5;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #d4af37;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #d4af37;
+            text-shadow: 3px 3px 6px rgba(212, 175, 55, 0.4);
+            letter-spacing: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            color: #f5f5f5;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-links button:hover {
+            color: #d4af37;
+            transform: translateY(-2px);
+        }
+
+        .nav-links button.active {
+            color: #d4af37;
+            border-bottom: 2px solid #d4af37;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 100px auto 0;
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.6s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            text-shadow: 4px 4px 8px rgba(212, 175, 55, 0.5);
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .menu-category {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .menu-card {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.9), rgba(40, 40, 40, 0.8));
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+
+        .menu-card:hover::before {
+            opacity: 1;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+            border-color: #ffd700;
+        }
+
+        .menu-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-size: 1.7rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-card p {
+            color: #c0c0c0;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price {
+            color: #ffd700;
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        .reservation-form {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(40, 40, 40, 0.9));
+            border: 2px solid #d4af37;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 50px rgba(212, 175, 55, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #d4af37;
+            margin-bottom: 0.7rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            border-radius: 10px;
+            color: #f5f5f5;
+            font-size: 1.1rem;
+            font-family: 'Cormorant Garamond', serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4af37;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #d4af37, #ffd700);
+            color: #000;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.3rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(255, 215, 0, 0.1));
+            border-radius: 15px;
+            border: 2px solid #d4af37;
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .contact-info p {
+            font-size: 1.4rem;
+            color: #e0e0e0;
+            margin: 0.5rem 0;
+        }
+
+        .about-content {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(40, 40, 40, 0.9));
+            border: 2px solid #d4af37;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 50px rgba(212, 175, 55, 0.3);
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .about-content p {
+            color: #e0e0e0;
+            font-size: 1.3rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
+            .nav-links button {
+                font-size: 1rem;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">RATHA</div>
+            <div class="nav-links">
+                <button onclick="showSection('home')" class="active">Home</button>
+                <button onclick="showSection('food')">Makanan</button>
+                <button onclick="showSection('drinks')">Minuman</button>
+                <button onclick="showSection('snacks')">Snack</button>
+                <button onclick="showSection('reservation')">Reservasi</button>
+                <button onclick="showSection('about')">Tentang Kami</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Home Section -->
+        <div id="home" class="section active">
+            <div class="hero">
+                <h1>RATHA RESTO</h1>
+                <p>Pengalaman Kuliner Mewah yang Tak Terlupakan</p>
+            </div>
+        </div>
+
+        <!-- Food Section -->
+        <div id="food" class="section">
+            <div class="hero">
+                <h1>Menu Makanan</h1>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <h3>Beef Tenderloin Steak</h3>
+                    <p>Daging sapi pilihan dengan saus lada hitam dan kentang tumbuk</p>
+                    <div class="price">Rp 125.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Grilled Salmon</h3>
+                    <p>Salmon panggang dengan lemon butter sauce dan sayuran</p>
+                    <div class="price">Rp 95.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Chicken Cordon Bleu</h3>
+                    <p>Ayam gulung keju dan ham dengan saus krim jamur</p>
+                    <div class="price">Rp 75.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Aglio Olio Pasta</h3>
+                    <p>Pasta Italia dengan minyak zaitun, bawang putih, dan seafood</p>
+                    <div class="price">Rp 65.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Nasi Goreng Premium</h3>
+                    <p>Nasi goreng special dengan topping telur mata sapi dan ayam</p>
+                    <div class="price">Rp 55.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Tom Yum Seafood</h3>
+                    <p>Sup Thailand asam pedas dengan seafood segar</p>
+                    <div class="price">Rp 70.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Lamb Chop</h3>
+                    <p>Daging kambing panggang dengan rosemary dan mint sauce</p>
+                    <div class="price">Rp 135.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Pizza Margherita</h3>
+                    <p>Pizza Italia klasik dengan mozzarella dan basil segar</p>
+                    <div class="price">Rp 85.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Beef Burger Deluxe</h3>
+                    <p>Burger daging sapi dengan keju, sayuran dan french fries</p>
+                    <div class="price">Rp 68.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Mushroom Risotto</h3>
+                    <p>Nasi Italia creamy dengan jamur dan parmesan</p>
+                    <div class="price">Rp 72.000</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drinks Section -->
+        <div id="drinks" class="section">
+            <div class="hero">
+                <h1>Menu Minuman</h1>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <h3>Signature Mocktail</h3>
+                    <p>Campuran buah tropis dengan soda dan mint segar</p>
+                    <div class="price">Rp 45.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Fresh Orange Juice</h3>
+                    <p>Jus jeruk segar tanpa tambahan gula</p>
+                    <div class="price">Rp 35.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Cappuccino Premium</h3>
+                    <p>Kopi espresso dengan foam susu yang lembut</p>
+                    <div class="price">Rp 38.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Lemon Tea</h3>
+                    <p>Teh segar dengan perasan lemon alami</p>
+                    <div class="price">Rp 28.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Chocolate Milkshake</h3>
+                    <p>Minuman coklat dengan es krim vanilla</p>
+                    <div class="price">Rp 42.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Matcha Latte</h3>
+                    <p>Teh hijau Jepang dengan susu creamy</p>
+                    <div class="price">Rp 40.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Tropical Smoothie</h3>
+                    <p>Smoothie mangga, nanas dan passion fruit</p>
+                    <div class="price">Rp 48.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Sparkling Lemonade</h3>
+                    <p>Lemon soda segar dengan mint</p>
+                    <div class="price">Rp 32.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Hot Chocolate Deluxe</h3>
+                    <p>Coklat panas premium dengan marshmallow</p>
+                    <div class="price">Rp 38.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Avocado Coffee</h3>
+                    <p>Perpaduan unik alpukat dengan kopi</p>
+                    <div class="price">Rp 45.000</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Snacks Section -->
+        <div id="snacks" class="section">
+            <div class="hero">
+                <h1>Menu Snack</h1>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <h3>Truffle Fries</h3>
+                    <p>Kentang goreng dengan truffle oil dan parmesan</p>
+                    <div class="price">Rp 48.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Chicken Wings</h3>
+                    <p>Sayap ayam goreng dengan saus BBQ atau Buffalo</p>
+                    <div class="price">Rp 52.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Calamari Rings</h3>
+                    <p>Cumi goreng tepung renyah dengan saus tartar</p>
+                    <div class="price">Rp 55.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Spring Rolls</h3>
+                    <p>Lumpia sayuran dengan saus asam manis</p>
+                    <div class="price">Rp 38.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Cheese Nachos</h3>
+                    <p>Nachos dengan saus keju cheddar dan jalapeño</p>
+                    <div class="price">Rp 45.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Bruschetta</h3>
+                    <p>Roti panggang dengan tomat, basil dan mozzarella</p>
+                    <div class="price">Rp 42.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Onion Rings</h3>
+                    <p>Bawang bombay goreng tepung dengan saus mayo</p>
+                    <div class="price">Rp 35.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Mozzarella Sticks</h3>
+                    <p>Keju mozzarella goreng dengan marinara sauce</p>
+                    <div class="price">Rp 48.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Garlic Bread</h3>
+                    <p>Roti bawang putih dengan keju leleh</p>
+                    <div class="price">Rp 32.000</div>
+                </div>
+                <div class="menu-card">
+                    <h3>Caesar Salad</h3>
+                    <p>Salad romaine dengan dressing caesar dan crouton</p>
+                    <div class="price">Rp 45.000</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reservation Section -->
+        <div id="reservation" class="section">
+            <div class="hero">
+                <h1>Reservasi</h1>
+            </div>
+            <div class="reservation-form">
+                <form onsubmit="handleReservation(event)">
+                    <div class="form-group">
+                        <label>Nama Lengkap</label>
+                        <input type="text" required placeholder="Masukkan nama Anda">
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Telepon</label>
+                        <input type="tel" required placeholder="Contoh: 081234567890">
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Waktu</label>
+                        <input type="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah Tamu</label>
+                        <select required>
+                            <option value="">Pilih jumlah tamu</option>
+                            <option value="1">1 Orang</option>
+                            <option value="2">2 Orang</option>
+                            <option value="3">3 Orang</option>
+                            <option value="4">4 Orang</option>
+                            <option value="5">5 Orang</option>
+                            <option value="6">6+ Orang</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Catatan Khusus (Opsional)</label>
+                        <textarea rows="3" placeholder="Permintaan khusus atau preferensi meja"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Buat Reservasi</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h3>Hubungi Kami</h3>
+                <p>📞 081231342357</p>
+                <p>Untuk reservasi dan informasi lebih lanjut</p>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div id="about" class="section">
+            <div class="about-content">
+                <h2>Tentang Ratha Resto</h2>
+                <p>Ratha Resto adalah destinasi kuliner yang menghadirkan pengalaman fine dining dengan suasana mewah dan elegan. Dengan interior hitam gold yang sophisticated, kami berkomitmen untuk memberikan pengalaman gastronomi yang tak terlupakan.</p>
+                <p>Sejak didirikan, kami telah melayani para penikmat kuliner dengan menu-menu pilihan yang dibuat oleh chef berpengalaman. Setiap hidangan dirancang dengan perhatian detail dan menggunakan bahan-bahan berkualitas tinggi dengan harga yang terjangkau.</p>
+                <p>Kami percaya bahwa makan bukan hanya tentang rasa, tetapi juga tentang pengalaman, suasana, dan kenangan yang tercipta. Di Ratha Resto, setiap kunjungan adalah sebuah perayaan keindahan kuliner.</p>
+                <p><strong>Jam Operasional:</strong><br>
+                Senin - Jumat: 11:00 - 23:00<br>
+                Sabtu - Minggu: 10:00 - 24:00</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            const buttons = document.querySelectorAll('.nav-links button');
+            buttons.forEach(button => button.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function handleReservation(event) {
+            event.preventDefault();
+            alert('Terima kasih! Reservasi Anda telah diterima. Kami akan menghubungi Anda segera di nomor yang Anda berikan untuk konfirmasi.');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
